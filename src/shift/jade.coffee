@@ -1,7 +1,7 @@
 class Jade
   engine: -> require('jade')
   
-  compile: (content, options, callback) ->
+  render: (content, options, callback) ->
     self          = @
     result        = ""
     if typeof(options) == "function"

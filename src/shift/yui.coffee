@@ -1,8 +1,11 @@
 class Yui
-  compress: (string) ->
+  compressor: ->
+    require("../../vendor/cssmin").cssmin
+    
+  render: (string) ->
     @compressor()(string)
     
-  compressor: ->
-    @_compressor ?= require("../../../vendor/cssmin").cssmin
+  compress: (string) ->
+    @render(string)
     
 module.exports = Yui

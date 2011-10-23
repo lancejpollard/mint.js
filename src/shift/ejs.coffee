@@ -1,7 +1,7 @@
 class Ejs
   engine: -> require('ejs')
   
-  compile: (content, options, callback) ->
+  render: (content, options, callback) ->
     self          = @
     result        = ""
     if typeof(options) == "function"

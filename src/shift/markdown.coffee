@@ -1,7 +1,7 @@
 class Markdown
   engine: -> require('markdown')
   
-  compile: (content, options) ->
+  render: (content, options) ->
     @engine().parse content
     
 exports = module.exports = Markdown

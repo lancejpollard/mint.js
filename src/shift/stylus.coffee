@@ -1,7 +1,7 @@
 class Stylus
   engine: -> require('stylus')
   
-  compile: (content, options, callback) ->
+  render: (content, options, callback) ->
     result        = ""
     self = @
     if typeof(options) == "function"

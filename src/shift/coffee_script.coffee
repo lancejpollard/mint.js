@@ -1,7 +1,7 @@
 class CoffeeScript
   engine: -> require('coffee-script')
   
-  compile: (content, options, callback) ->
+  render: (content, options, callback) ->
     result        = ""
     if typeof(options) == "function"
       callback    = options

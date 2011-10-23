@@ -1,6 +1,6 @@
 # Shift.js
 
-> Interface on Template Engines for Node.js
+> Standard Interface to the Node.js Template Engines.
 
 ## Install
 
@@ -15,6 +15,16 @@ Shift = require('shift')
 
 mustache  = new Shift.Mustache()
 mustache.render "{title}!", locals: title: "Hello World", (string) -> console.log(string) #=> "Hello World!"
+```
+
+or more formally:
+
+``` coffeescript
+engine    = new Shift.Jade
+input     = fs.readFileSync("./spec/fixtures/views/jade.jade", "utf-8")
+output    = fs.readFileSync("./spec/fixtures/views/jade.html", "utf-8")
+engine.render input, (error, result) ->
+  expect(result).toEqual output
 ```
 
 ## Development

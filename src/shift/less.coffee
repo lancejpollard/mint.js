@@ -3,7 +3,7 @@ class Less
   
   # need to specify lookup paths for imports!
   # compile "background: red", paths: ["./app/assets/stylesheets"]
-  compile: (content, options, callback) ->
+  render: (content, options, callback) ->
     result        = ""
     self          = @
     if typeof(options) == "function"
