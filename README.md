@@ -11,8 +11,7 @@ npm install shift
 ## Example
 
 ``` coffeescript
-Shift = require('shift')
-
+Shift     = require('shift')
 mustache  = new Shift.Mustache()
 mustache.render "{title}!", locals: title: "Hello World", (string) -> console.log(string) #=> "Hello World!"
 ```
