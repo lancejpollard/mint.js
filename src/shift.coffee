@@ -8,7 +8,7 @@ Shift =
   Mustache:             require('./shift/mustache')
   Markdown:             require('./shift/markdown')
   Sprite:               require('./shift/sprite')
-  Yui:                  require('./shift/yui')
-  Uglifier:             require('./shift/uglifier')
+  YuiCompressor:        require('./shift/yui_compressor')
+  UglifyJS:             require('./shift/uglifyjs')
   
 module.exports = Shift

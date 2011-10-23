@@ -4,14 +4,14 @@ fs = require('fs')
 
 describe "shift", ->
   it "should render minified css with yui", ->
-    engine    = new Shift.Yui
+    engine    = new Shift.YuiCompressor
     input     = "body { background: red; }"
     output    = "body{background:red}"
     
     expect(engine.render(input)).toEqual output
   
   it "should use the UglifyJS compressor", ->
-    engine    = new Shift.Uglifier
+    engine    = new Shift.UglifyJS
     input     = '''
     $(document).ready(function() {
       alert("ready!")

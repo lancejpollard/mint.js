@@ -1,4 +1,4 @@
-class Uglifier
+class UglifyJS
   compressor: ->
     require("uglify-js").uglify
   
@@ -14,4 +14,4 @@ class Uglifier
   compress: (string) ->
     @render(string)
     
-module.exports = Uglifier
+module.exports = UglifyJS

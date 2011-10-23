@@ -1,4 +1,4 @@
-class Yui
+class YuiCompressor
   compressor: ->
     require("../../vendor/cssmin").cssmin
     
@@ -8,4 +8,4 @@ class Yui
   compress: (string) ->
     @render(string)
     
-module.exports = Yui
+module.exports = YuiCompressor

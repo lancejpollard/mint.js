@@ -8,7 +8,7 @@
 npm install shift
 ```
 
-## Render
+## Example
 
 ``` coffeescript
 Shift = require('shift')
@@ -25,6 +25,28 @@ input     = fs.readFileSync("./spec/fixtures/views/jade.jade", "utf-8")
 output    = fs.readFileSync("./spec/fixtures/views/jade.html", "utf-8")
 engine.render input, (error, result) ->
   expect(result).toEqual output
+```
+
+## API
+
+``` coffeescript
+engine = new Shift.CoffeeScript
+engine.render(string, options, callback)
+```
+
+## Engines
+
+``` coffeescript
+new Shift.CoffeeScript
+new Shift.Ejs
+new Shift.Haml
+new Shift.Jade
+new Shift.Less
+new Shift.Markdown
+new Shift.Mustache
+new Shift.Stylus
+new Shift.UglifyJS
+new Shift.YuiCompressor
 ```
 
 ## Development
