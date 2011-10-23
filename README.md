@@ -8,6 +8,21 @@
 npm install shift
 ```
 
+## Engines
+
+``` coffeescript
+new Shift.CoffeeScript
+new Shift.Ejs
+new Shift.Haml
+new Shift.Jade
+new Shift.Less
+new Shift.Markdown
+new Shift.Mustache
+new Shift.Stylus
+new Shift.UglifyJS
+new Shift.YuiCompressor
+```
+
 ## Example
 
 ``` coffeescript
@@ -31,21 +46,6 @@ engine.render input, (error, result) ->
 ``` coffeescript
 engine = new Shift.CoffeeScript
 engine.render(string, options, callback)
-```
-
-## Engines
-
-``` coffeescript
-new Shift.CoffeeScript
-new Shift.Ejs
-new Shift.Haml
-new Shift.Jade
-new Shift.Less
-new Shift.Markdown
-new Shift.Mustache
-new Shift.Stylus
-new Shift.UglifyJS
-new Shift.YuiCompressor
 ```
 
 ## Development
