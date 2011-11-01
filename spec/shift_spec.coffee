@@ -3,6 +3,10 @@ Shift = require('../lib/shift')
 fs = require('fs')
 
 describe "shift", ->
+  it 'should find engine', ->
+    expect(Shift.engine(".less").constructor).toEqual Shift.Less
+    expect(Shift.engine("less").constructor).toEqual Shift.Less
+
   it "should render minified css with yui", ->
     engine    = new Shift.YuiCompressor
     input     = "body { background: red; }"
