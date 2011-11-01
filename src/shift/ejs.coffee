@@ -7,7 +7,7 @@ class Ejs
     if typeof(options) == "function"
       callback    = options
       options     = {}
-    options ?= {}
+    options ||= {}
     
     result = @engine().render(content, options)
     

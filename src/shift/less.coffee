@@ -9,7 +9,7 @@ class Less
     if typeof(options) == "function"
       callback    = options
       options     = {}
-    options ?= {}
+    options ||= {}
     
     engine = @engine()
     parser = new engine.Parser(options)

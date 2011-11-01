@@ -7,7 +7,7 @@ class Stylus
     if typeof(options) == "function"
       callback    = options
       options     = {}
-    options ?= {}
+    options ||= {}
     
     engine = @engine()
     engine = engine.set('paths', options.paths) if options.paths?

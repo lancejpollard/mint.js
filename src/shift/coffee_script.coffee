@@ -12,6 +12,7 @@ class CoffeeScript
     try
       result      = @engine().compile(content, options)
     catch e
+      result      = null
       error       = e
     
     callback.call(@, error, result) if callback

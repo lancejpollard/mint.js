@@ -5,13 +5,26 @@ class UglifyJS
   parser: ->
     require("uglify-js").parser
   
-  render: (string) ->
-    ast = @parser().parse(string)
-    ast = @compressor().ast_mangle(ast)
-    ast = @compressor().ast_squeeze(ast)
-    @compressor().gen_code(ast)
+  render: (content, options, callback) ->
+    if typeof(options) == "function"
+      callback    = options
+      options     = {}
+    options ||= {}
+    error = null
     
-  compress: (string) ->
-    @render(string)
+    try
+      ast = @parser().parse(content)
+      ast = @compressor().ast_mangle(ast)
+      ast = @compressor().ast_squeeze(ast)
+      result = @compressor().gen_code(ast)
+    catch e
+      error = e
+      
+    callback.call(@, error, result) if callback
+    
+    result
+    
+  compress: (content) ->
+    @render(content)
     
 module.exports = UglifyJS

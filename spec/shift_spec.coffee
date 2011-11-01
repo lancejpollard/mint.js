@@ -8,7 +8,8 @@ describe "shift", ->
     input     = "body { background: red; }"
     output    = "body{background:red}"
     
-    expect(engine.render(input)).toEqual output
+    engine.render input, (error, result) ->
+      expect(result).toEqual output
   
   it "should use the UglifyJS compressor", ->
     engine    = new Shift.UglifyJS
@@ -19,13 +20,15 @@ describe "shift", ->
     '''
     output    = '$(document).ready(function(){alert("ready!")})'
     
-    expect(engine.render(input)).toEqual output
+    engine.render input, (error, result) ->
+      expect(result).toEqual output
   
   it "should render stylus", ->
     engine    = new Shift.Stylus
     input     = fs.readFileSync("./spec/fixtures/stylesheets/stylus.styl", "utf-8")
     output    = fs.readFileSync("./spec/fixtures/stylesheets/stylus.css", "utf-8")
-    expect(engine.render(input)).toEqual output
+    engine.render input, (error, result) ->
+      expect(result).toEqual output
       
   it "should render jade", ->
     engine    = new Shift.Jade
@@ -33,7 +36,7 @@ describe "shift", ->
     output    = fs.readFileSync("./spec/fixtures/views/jade.html", "utf-8")
     engine.render input, (error, result) ->
       expect(result).toEqual output
-
+    
   it "should render haml", ->
     engine    = new Shift.Haml
     input     = fs.readFileSync("./spec/fixtures/views/haml.haml", "utf-8")
@@ -52,30 +55,30 @@ describe "shift", ->
     engine    = new Shift.CoffeeScript
     input     = fs.readFileSync("./spec/fixtures/javascripts/coffee.coffee", "utf-8")
     output    = fs.readFileSync("./spec/fixtures/javascripts/coffee.js", "utf-8")
-    result = engine.render input, {locals: {name: "My Name"}}
-    expect(result).toEqual output
+    engine.render input, {locals: {name: "My Name"}}, (error, result) ->
+      expect(result).toEqual output
 
   it "should render less", ->
     engine    = new Shift.Less
     input     = fs.readFileSync("./spec/fixtures/stylesheets/less.less", "utf-8")
     output    = fs.readFileSync("./spec/fixtures/stylesheets/less.css", "utf-8")
-    result    = engine.render input
-    expect(result).toEqual output
-
+    engine.render input, (error, result) ->
+      expect(result).toEqual output
+    
   it "should render mustache", ->
     engine    = new Shift.Mustache
     input     = fs.readFileSync("./spec/fixtures/views/mustache.mustache", "utf-8")
     output    = fs.readFileSync("./spec/fixtures/views/mustache.html", "utf-8")
     locals = {name: "World", say_hello: -> "Hello" }
-    result = engine.render input, locals: locals
-    expect(result).toEqual output
+    engine.render input, locals: locals, (error, result) ->
+      expect(result).toEqual output
     
   it "should render markdown", ->
     engine    = new Shift.Markdown
     input     = fs.readFileSync("./spec/fixtures/docs/markdown.markdown", "utf-8")
     output    = fs.readFileSync("./spec/fixtures/docs/markdown.html", "utf-8")
-    result = engine.render input
-    expect(result).toEqual output
+    engine.render input, (error, result) ->
+      expect(result).toEqual output
 ###      
   describe "sprite", ->
     it "should create a sprite map", ->
