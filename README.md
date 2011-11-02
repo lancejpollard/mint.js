@@ -48,6 +48,56 @@ engine = new Shift.CoffeeScript
 engine.render(string, options, callback)
 ```
 
+## Preprocessing
+
+Sometimes you might need to hack in a feature to the language.  Like right now, stylus doesn't support multiline values for css attributes, so you can add it like this:
+
+``` coffeescript
+engine  = new Shift.Stylus
+
+input   = '''
+div
+  box-shadow: 0 -2px 2px            hsl(220, 20%, 40%),
+    0 -10px 10px          hsl(220, 20%, 20%),
+    0 0 15px              black,
+
+    inset 0 5px 1px       hsla(220, 80%, 10%, 0.4), 
+    inset 0 0 5px         hsla(220, 80%, 10%, 0.1),
+    inset 0 20px 15px     hsla(220, 80%, 100%, 1),
+
+    inset 0 1px 0         hsl(219, 20%, 0%), 
+
+    inset 0 -50px 50px -40px hsla(220, 80%, 10%, .3),  /* gradient to inset */
+
+    inset 0 -1px 0px      hsl(220, 20%, 20%),
+    inset 0 -2px 0px      hsl(220, 20%, 40%),
+    inset 0 -2px 1px      hsl(220, 20%, 65%)  
+'''
+
+output  = '''
+div {
+  box-shadow: 0 -2px 2px #525f7a, 0 -10px 10px #29303d, 0 0 15px #000, inset 0 5px 1px rgba(5,19,46,0.40), inset 0 0 5px rgba(5,19,46,0.10), inset 0 20px 15px #fff, inset 0 1px 0 #000, inset 0 -50px 50px -40px rgba(5,19,46,0.30), inset 0 -1px 0px #29303d, inset 0 -2px 0px #525f7a, inset 0 -2px 1px #94a0b8;
+}
+
+'''
+# locally
+options   =
+  preprocessor: (content) ->
+    content.replace /(\s+)(.*),\s+(?:\/\*.*\*\/)?\s*/mg, (_, indent, attribute) ->
+      "#{indent}#{attribute.replace(/\s+/g, " ")}, "
+
+engine.render input, options, (error, result) ->
+  expect(result).toEqual output
+
+# globally
+Shift.Stylus.preprocessor = (content) ->
+  content.replace /(\s+)(.*),\s+(?:\/\*.*\*\/)?\s*/mg, (_, indent, attribute) ->
+    "#{indent}#{attribute.replace(/\s+/g, " ")}, "
+
+engine.render input, (error, result) ->
+  expect(result).toEqual output
+```
+
 ## Development
 
 ``` bash
