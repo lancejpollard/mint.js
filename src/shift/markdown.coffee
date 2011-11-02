@@ -8,6 +8,9 @@ class Markdown
     options ||= {}
     error = null
     
+    preprocessor = options.preprocessor || @constructor.preprocessor
+    content = preprocessor.call(@, content, options) if preprocessor
+    
     try
       result = @engine().parse content
     catch e

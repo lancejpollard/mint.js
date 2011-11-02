@@ -8,6 +8,9 @@ class Mustache
     options ||= {}
     error = null
     
+    preprocessor = options.preprocessor || @constructor.preprocessor
+    content = preprocessor.call(@, content, options) if preprocessor
+    
     try
       result = @engine().to_html content, options.locals
     catch e

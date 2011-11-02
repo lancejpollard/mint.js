@@ -9,6 +9,10 @@ class CoffeeScript
     options ?= {}
     
     options.bare  = true unless options.hasOwnProperty("bare")
+    
+    preprocessor = options.preprocessor || @constructor.preprocessor
+    content = preprocessor.call(@, content, options) if preprocessor
+    
     try
       result      = @engine().compile(content, options)
     catch e

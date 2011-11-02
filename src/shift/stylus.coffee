@@ -9,8 +9,10 @@ class Stylus
       options     = {}
     options ||= {}
     
+    preprocessor = options.preprocessor || @constructor.preprocessor
+    content = preprocessor.call(@, content, options) if preprocessor
+    
     engine = @engine()
-    engine = engine.set('paths', options.paths) if options.paths?
     
     engine.render content, options, (error, data) -> 
       result = data
