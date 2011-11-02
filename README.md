@@ -50,14 +50,14 @@ engine.render(string, options, callback)
 
 ## Preprocessing
 
-Sometimes you might need to hack in a feature to the language.  Like right now, stylus doesn't support multiline values for css attributes, so you can add it like this:
+Sometimes you might need to hack in a feature to the language.  Like right now, stylus doesn't support multiline values for css attributes, so you might add it like this:
 
 ``` coffeescript
 engine  = new Shift.Stylus
 
 input   = '''
 div
-  box-shadow: 0 -2px 2px            hsl(220, 20%, 40%),
+  box-shadow: 0 -2px 2px  hsl(220, 20%, 40%),
     0 -10px 10px          hsl(220, 20%, 20%),
     0 0 15px              black,
 
