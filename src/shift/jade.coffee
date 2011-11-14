@@ -14,6 +14,7 @@ class Jade
     
     @engine().render content, options, (error, data) ->
       result = data
+      error.message += ", #{path}" if error && path
       callback.call(self, error, result) if callback
       
     result

@@ -9,8 +9,9 @@ class UglifyJS
     if typeof(options) == "function"
       callback    = options
       options     = {}
-    options ||= {}
-    error = null
+    options     ||= {}
+    path          = options.path
+    error         = null
     
     try
       ast = @parser().parse(content)
@@ -19,6 +20,7 @@ class UglifyJS
       result = @compressor().gen_code(ast)
     catch e
       error = e
+      error.message += ", #{path}" if path
       
     callback.call(@, error, result) if callback
     

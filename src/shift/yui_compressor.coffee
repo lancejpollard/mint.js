@@ -6,13 +6,15 @@ class YuiCompressor
     if typeof(options) == "function"
       callback    = options
       options     = {}
-    options ||= {}
-    error = null
+    options     ||= {}
+    path          = options.path
+    error         = null
     
     try
       result = @compressor()(content)
     catch e
       error = e
+      error.message += ", #{path}" if path
       
     callback.call(@, error, result) if callback
     

@@ -9,13 +9,18 @@ class Less
     if typeof(options) == "function"
       callback    = options
       options     = {}
-    options ||= {}
+    options     ||= {}
+    path          = options.path
     
     engine = @engine()
     parser = new engine.Parser(options)
     
     parser.parse content, (error, tree) -> 
-      result = tree.toCSS()
+      if error
+        error.message += ", #{path}" if path
+      else
+        result = tree.toCSS()
+        
       callback.call(self, error, result) if callback
     
     result

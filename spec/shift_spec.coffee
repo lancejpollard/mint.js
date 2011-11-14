@@ -3,6 +3,15 @@ Shift = require('../lib/shift')
 fs = require('fs')
 
 describe "shift", ->
+  it 'should render sequentially based on filename', ->
+    output = '''
+$(document).ready(function() {
+  return alert("Hello World");
+});
+'''
+    Shift.render path: "spec/fixtures/javascripts/some.extensions.js.coffee.ejs", locals: {word: "Hello World"}, (error, result) ->
+      expect(result).toEqual output
+  
   it 'should find engine', ->
     expect(Shift.engine(".less").constructor).toEqual Shift.Less
     expect(Shift.engine("less").constructor).toEqual Shift.Less
@@ -33,7 +42,21 @@ describe "shift", ->
     output    = fs.readFileSync("./spec/fixtures/stylesheets/stylus.css", "utf-8")
     engine.render input, (error, result) ->
       expect(result).toEqual output
-      
+  
+  it "should throw error in stylus", ->
+    engine    = new Shift.Stylus
+    path      = "spec/fixtures/stylesheets/stylus-error.styl"
+    input     = fs.readFileSync(path, "utf-8")
+    engine.render input, path: path, (error, result) ->
+      expect(error.message).toEqual '''
+stylus:2
+   1| body
+ > 2|   background: red@
+
+expected "indent", got "outdent", spec/fixtures/stylesheets/stylus-error.styl
+
+'''
+  
   it "should render jade", ->
     engine    = new Shift.Jade
     input     = fs.readFileSync("./spec/fixtures/views/jade.jade", "utf-8")
@@ -47,6 +70,13 @@ describe "shift", ->
     output    = fs.readFileSync("./spec/fixtures/views/haml.html", "utf-8")
     engine.render input, (error, result) ->
       expect(result).toEqual output
+  
+  # it "should render doT", ->
+  #   engine    = new Shift.DoT
+  #   input     = fs.readFileSync("./spec/fixtures/views/doT.js", "utf-8")
+  #   output    = fs.readFileSync("./spec/fixtures/views/doT.html", "utf-8")
+  #   engine.render input, (error, result) ->
+  #     expect(result).toEqual output
 
   it "should render ejs", ->
     engine    = new Shift.Ejs
@@ -61,6 +91,13 @@ describe "shift", ->
     output    = fs.readFileSync("./spec/fixtures/javascripts/coffee.js", "utf-8")
     engine.render input, {locals: {name: "My Name"}}, (error, result) ->
       expect(result).toEqual output
+      
+  it "should throw error with coffee script", ->
+    engine    = new Shift.CoffeeScript
+    path      = "spec/fixtures/javascripts/coffee-error.coffee"
+    input     = fs.readFileSync(path, "utf-8")
+    engine.render input, path: path, (error, result) ->
+      expect(error.message).toEqual 'missing ", starting on line 2, spec/fixtures/javascripts/coffee-error.coffee'
 
   it "should render less", ->
     engine    = new Shift.Less
