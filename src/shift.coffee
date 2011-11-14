@@ -61,7 +61,7 @@ Shift =
           string = output
           next()
     
-    require('async').forEachSeries engines, iterate, ->
-      callback.call(self, null, string)
+    require('async').forEachSeries engines, iterate, (error) ->
+      callback.call(self, error, string)
   
 module.exports = Shift

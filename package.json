@@ -1,6 +1,6 @@
 {
   "name": "shift",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Template framework",
   "homepage": "http://github.com/viatropos/shift.js",
   "main": "lib/shift.js",
