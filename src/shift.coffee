@@ -55,9 +55,11 @@ Shift =
     
     iterate = (engine, next) ->
       engine.render string, options, (error, output) ->
-        throw error if error
-        string = output
-        next()
+        if error
+          next(error)
+        else
+          string = output
+          next()
     
     require('async').forEachSeries engines, iterate, ->
       callback.call(self, null, string)
