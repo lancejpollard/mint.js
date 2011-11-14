@@ -7,10 +7,11 @@ class Jade
     if typeof(options) == "function"
       callback    = options
       options     = {}
-    options ||= {}
+    options     ||= {}
+    path          = options.path
     
-    preprocessor = options.preprocessor || @constructor.preprocessor
-    content = preprocessor.call(@, content, options) if preprocessor
+    preprocessor  = options.preprocessor || @constructor.preprocessor
+    content       = preprocessor.call(@, content, options) if preprocessor
     
     @engine().render content, options, (error, data) ->
       result = data
