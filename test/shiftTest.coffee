@@ -59,17 +59,19 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
 '''
       done()
   
-  it "should render jade", ->
+  it "should render jade", (done) ->
     input     = fs.readFileSync("./test/fixtures/views/jade.jade", "utf-8")
     output    = fs.readFileSync("./test/fixtures/views/jade.html", "utf-8")
-    shift.jade input, (error, result) ->
+    shift.jade input, {}, (error, result) ->
       assert.equal result, output
+      done()
     
-  it "should render haml", ->
+  it "should render haml", (done) ->
     input     = fs.readFileSync("./test/fixtures/views/haml.haml", "utf-8")
     output    = fs.readFileSync("./test/fixtures/views/haml.html", "utf-8")
-    shift.haml input, (error, result) ->
+    shift.haml input, {}, (error, result) ->
       assert.equal result, output
+      done()
   
   # it "should render doT", ->
   #   engine    = new shift.DoT

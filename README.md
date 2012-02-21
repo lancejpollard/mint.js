@@ -11,41 +11,41 @@ npm install shift
 ## Engines
 
 ``` coffeescript
-new Shift.CoffeeScript
-new Shift.Ejs
-new Shift.Haml
-new Shift.Jade
-new Shift.Less
-new Shift.Markdown
-new Shift.Mustache
-new Shift.Stylus
-new Shift.UglifyJS
-new Shift.YuiCompressor
+shift = require("shift")
+shift.coffee
+shift.coffeekup
+shift.eco
+shift.ejs
+shift.haml
+shift.jade
+shift.less
+shift.stylus
+shift.markdown
+shift.mustache
+shift.uglifyjs
+shift.yui
 ```
 
 ## Example
 
 ``` coffeescript
-Shift     = require('shift')
-mustache  = new Shift.Mustache()
-mustache.render "{title}!", locals: title: "Hello World", (string) -> console.log(string) #=> "Hello World!"
+shift     = require('shift')
+shift.mustache "{title}!", locals: title: "Hello World", (string) -> console.log(string) #=> "Hello World!"
 ```
 
 or more formally:
 
 ``` coffeescript
-engine    = new Shift.Jade
-input     = fs.readFileSync("./spec/fixtures/views/jade.jade", "utf-8")
-output    = fs.readFileSync("./spec/fixtures/views/jade.html", "utf-8")
-engine.render input, (error, result) ->
-  expect(result).toEqual output
+input     = fs.readFileSync("./test/fixtures/views/jade.jade", "utf-8")
+output    = fs.readFileSync("./test/fixtures/views/jade.html", "utf-8")
+shift.jade input, {}, (error, result) ->
+  assert.equal result, output
 ```
 
 ## API
 
 ``` coffeescript
-engine = new Shift.CoffeeScript
-engine.render(string, options, callback)
+shift[engine](string, options, callback)
 ```
 
 ## Preprocessing
@@ -53,8 +53,6 @@ engine.render(string, options, callback)
 Sometimes you might need to hack in a feature to the language.  Like right now, stylus doesn't support multiline values for css attributes, so you might add it like this:
 
 ``` coffeescript
-engine  = new Shift.Stylus
-
 input   = '''
 div
   box-shadow: 0 -2px 2px  hsl(220, 20%, 40%),
@@ -86,28 +84,23 @@ options   =
     content.replace /(\s+)(.*),\s+(?:\/\*.*\*\/)?\s*/mg, (_, indent, attribute) ->
       "#{indent}#{attribute.replace(/\s+/g, " ")}, "
 
-engine.render input, options, (error, result) ->
+shift.stylus input, options, (error, result) ->
   expect(result).toEqual output
 
 # globally
-Shift.Stylus.preprocessor = (content) ->
+shift.stylus.preprocessor = (content) ->
   content.replace /(\s+)(.*),\s+(?:\/\*.*\*\/)?\s*/mg, (_, indent, attribute) ->
     "#{indent}#{attribute.replace(/\s+/g, " ")}, "
 
-engine.render input, (error, result) ->
+shift.stylus input, {}, (error, result) ->
   expect(result).toEqual output
 ```
 
-## Development
+## Test
 
 ``` bash
-./node_modules/coffee-script/bin/coffee -o lib -w src
-./node_modules/jasmine-node/bin/jasmine-node --coffee ./spec
+mocha
 ```
-
-## Todo
-
-- https://github.com/GoalSmashers/clean-css
 
 ## License
 
