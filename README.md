@@ -1,36 +1,36 @@
-# Shift.js
+# Mint.js
 
-> Standard Interface to the Node.js Template Engines.
+> Standard Interface to the Node.js Template Engines (JavaScript, CSS, text, etc.).
 
 ## Install
 
 ``` bash
-npm install shift
+npm install mint
 ```
 
 ## Engines
 
 ``` coffeescript
-shift = require("shift")
-shift.coffee
-shift.coffeekup
-shift.eco
-shift.ejs
-shift.haml
-shift.jade
-shift.less
-shift.stylus
-shift.markdown
-shift.mustache
-shift.uglifyjs
-shift.yui
+mint = require("mint")
+mint.coffee
+mint.coffeekup
+mint.eco
+mint.ejs
+mint.haml
+mint.jade
+mint.less
+mint.stylus
+mint.markdown
+mint.mustache
+mint.uglifyjs
+mint.yui
 ```
 
 ## Example
 
 ``` coffeescript
-shift     = require('shift')
-shift.mustache "{title}!", locals: title: "Hello World", (string) -> console.log(string) #=> "Hello World!"
+mint     = require('mint')
+mint.mustache "{title}!", locals: title: "Hello World", (string) -> console.log(string) #=> "Hello World!"
 ```
 
 or more formally:
@@ -38,14 +38,14 @@ or more formally:
 ``` coffeescript
 input     = fs.readFileSync("./test/fixtures/views/jade.jade", "utf-8")
 output    = fs.readFileSync("./test/fixtures/views/jade.html", "utf-8")
-shift.jade input, {}, (error, result) ->
+mint.jade input, {}, (error, result) ->
   assert.equal result, output
 ```
 
 ## API
 
 ``` coffeescript
-shift[engine](string, options, callback)
+mint[engine](string, options, callback)
 ```
 
 ## Preprocessing
@@ -84,15 +84,15 @@ options   =
     content.replace /(\s+)(.*),\s+(?:\/\*.*\*\/)?\s*/mg, (_, indent, attribute) ->
       "#{indent}#{attribute.replace(/\s+/g, " ")}, "
 
-shift.stylus input, options, (error, result) ->
+mint.stylus input, options, (error, result) ->
   expect(result).toEqual output
 
 # globally
-shift.stylus.preprocessor = (content) ->
+mint.stylus.preprocessor = (content) ->
   content.replace /(\s+)(.*),\s+(?:\/\*.*\*\/)?\s*/mg, (_, indent, attribute) ->
     "#{indent}#{attribute.replace(/\s+/g, " ")}, "
 
-shift.stylus input, {}, (error, result) ->
+mint.stylus input, {}, (error, result) ->
   expect(result).toEqual output
 ```
 

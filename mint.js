@@ -223,6 +223,7 @@
       }
       return result;
     },
+    handlebars: function(content, options, callback) {},
     markdown: function(content, options, callback) {
       var error, preprocessor, result;
       error = null;
@@ -245,7 +246,7 @@
       path = options.path;
       error = null;
       try {
-        result = require("../vendor/cssmin").cssmin(content);
+        result = require("./vendor/cssmin").cssmin(content);
       } catch (e) {
         error = e;
         if (path) {

@@ -1,9 +1,9 @@
 {
-  "name": "shift",
+  "name": "mint",
   "version": "0.3.0",
-  "description": "Template framework",
-  "homepage": "http://github.com/viatropos/shift.js",
-  "main": "lib/shift.js",
+  "description": "Template abstraction framework",
+  "homepage": "http://github.com/viatropos/mint.js",
+  "main": "mint.js",
   "author": "Lance Pollard <lancejpollard@gmail.com>",
   "keywords": [
     "framework",
@@ -17,14 +17,19 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/viatropos/shift.js/issues"
+    "url": "https://github.com/viatropos/mint.js/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/viatropos/shift.js.git"
+    "url": "https://github.com/viatropos/mint.js.git"
   },
-  "engines": { "node": ">= 0.4.0" },
+  "engines": {
+    "node": ">= 0.4.0"
+  },
   "dependencies": {
     
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }

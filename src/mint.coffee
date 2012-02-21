@@ -171,6 +171,9 @@ module.exports =
     callback.call(@, error, result) if callback
     
     result
+    
+  handlebars: (content, options, callback) ->
+    
   
   markdown: (content, options, callback) ->
     error = null
@@ -192,7 +195,7 @@ module.exports =
     error         = null
     
     try
-      result = require("../vendor/cssmin").cssmin(content)
+      result = require("./vendor/cssmin").cssmin(content)
     catch e
       error = e
       error.message += ", #{path}" if path
