@@ -1,6 +1,6 @@
 {
   "name": "shift",
-  "version": "0.1.8",
+  "version": "0.3.0",
   "description": "Template framework",
   "homepage": "http://github.com/viatropos/shift.js",
   "main": "lib/shift.js",
@@ -24,9 +24,6 @@
     "url": "https://github.com/viatropos/shift.js.git"
   },
   "engines": { "node": ">= 0.4.0" },
-  "directories": {
-    "test": "spec"
-  },
   "dependencies": {
     
   }
