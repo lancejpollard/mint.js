@@ -181,6 +181,7 @@
       parser = new engine.Parser(options);
       try {
         parser.parse(content, __bind(function(error, tree) {
+          var message;
           if (error) {
             if (path) {
               error.message += ", " + path;
@@ -192,8 +193,11 @@
               error = e;
             }
           }
+          if (error) {
+            message = error.message + ", " + path;
+          }
           if (callback) {
-            return callback.call(this, error, result);
+            return callback.call(this, message, result);
           }
         }, this));
       } catch (error) {

@@ -148,7 +148,8 @@ module.exports =
           catch e
             error = e
         
-        callback.call(@, error, result) if callback
+        message = (error.message + ", " + path) if error
+        callback.call(@, message, result) if callback
       
     catch error
       callback.call(@, error.message += ", " + path, "")
