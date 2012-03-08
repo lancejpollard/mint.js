@@ -18,6 +18,7 @@ $(document).ready(function() {
   it 'should find engine', ->
     assert.equal mint.engine(".styl"), "stylus"
     assert.equal mint.engine("styl"), "stylus"
+    assert.equal mint.engine("eco"), "eco"
 
   it "should render minified css with yui", (done) ->
     input     = "body { background: red; }"
