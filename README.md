@@ -2,6 +2,8 @@
 
 > Standard Interface to the Node.js Template Engines (JavaScript, CSS, text, etc.).
 
+[![Build Status](https://secure.travis-ci.org/viatropos/mint.png)](http://travis-ci.org/viatropos/mint)
+
 ## Install
 
 ``` bash
