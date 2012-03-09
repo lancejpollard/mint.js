@@ -1,5 +1,5 @@
 (function() {
-
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   module.exports = {
     engines: {},
     engine: function(extension) {
@@ -44,65 +44,76 @@
       for (_i = 0, _len = extensions.length; _i < _len; _i++) {
         extension = extensions[_i];
         engine = this.engine(extension);
-        if (engine) engines.push(engine);
+        if (engine) {
+          engines.push(engine);
+        }
       }
       return engines;
     },
     render: function(options, callback) {
-      var engines, iterate, path, string,
-        _this = this;
+      var engines, iterate, path, string;
       path = options.path;
       string = options.string || require('fs').readFileSync(path, 'utf-8');
       engines = options.engines || this.enginesFor(path);
-      iterate = function(engine, next) {
-        return _this[engine](string, options, function(error, output) {
+      iterate = __bind(function(engine, next) {
+        return this[engine](string, options, __bind(function(error, output) {
           if (error) {
             return next(error);
           } else {
             string = output;
             return next();
           }
-        });
-      };
-      return this._async(engines, iterate, function(error) {
-        return callback.call(_this, error, string);
-      });
+        }, this));
+      }, this);
+      return this._async(engines, iterate, __bind(function(error) {
+        return callback.call(this, error, string);
+      }, this));
     },
     stylus: function(content, options, callback) {
-      var engine, path, preprocessor, result,
-        _this = this;
+      var engine, path, preprocessor, result;
       result = "";
       path = options.path;
       preprocessor = options.preprocessor || this.stylus.preprocessor;
-      if (preprocessor) content = preprocessor.call(this, content, options);
+      if (preprocessor) {
+        content = preprocessor.call(this, content, options);
+      }
       engine = require('stylus');
-      engine.render(content, options, function(error, data) {
+      engine.render(content, options, __bind(function(error, data) {
         result = data;
         if (error && path) {
           error.message = error.message.replace(/\n$/, ", " + path + "\n");
         }
-        if (callback) return callback.call(_this, error, result);
-      });
+        if (callback) {
+          return callback.call(this, error, result);
+        }
+      }, this));
       return result;
     },
     jade: function(content, options, callback) {
-      var path, preprocessor, result,
-        _this = this;
+      var path, preprocessor, result;
       result = "";
       path = options.path;
       preprocessor = options.preprocessor || this.jade.preprocessor;
-      if (preprocessor) content = preprocessor.call(this, content, options);
-      require("jade").render(content, options, function(error, data) {
+      if (preprocessor) {
+        content = preprocessor.call(this, content, options);
+      }
+      require("jade").render(content, options, __bind(function(error, data) {
         result = data;
-        if (error && path) error.message += ", " + path;
-        if (callback) return callback.call(_this, error, result);
-      });
+        if (error && path) {
+          error.message += ", " + path;
+        }
+        if (callback) {
+          return callback.call(this, error, result);
+        }
+      }, this));
       return result;
     },
     haml: function(content, options, callback) {
       var result;
       result = require('hamljs').render(content, options || {});
-      if (callback) callback.call(this, null, result);
+      if (callback) {
+        callback.call(this, null, result);
+      }
       return result;
     },
     ejs: function(content, options, callback) {
@@ -115,41 +126,54 @@
         error = e;
         result = null;
       }
-      if (callback) callback.call(this, error, result);
+      if (callback) {
+        callback.call(this, error, result);
+      }
       return result;
     },
     eco: function(content, options, callback) {
       var result;
       result = require("eco").render(content, options.locals);
-      if (callback) callback.call(this, null, result);
+      if (callback) {
+        callback.call(this, null, result);
+      }
       return result;
     },
     coffee: function(content, options, callback) {
       var error, path, preprocessor, result;
       result = "";
       path = options.path;
-      if (!options.hasOwnProperty("bare")) options.bare = true;
+      if (!options.hasOwnProperty("bare")) {
+        options.bare = true;
+      }
       preprocessor = options.preprocessor || this.coffee.preprocessor;
-      if (preprocessor) content = preprocessor.call(this, content, options);
+      if (preprocessor) {
+        content = preprocessor.call(this, content, options);
+      }
       try {
         result = require("coffee-script").compile(content, options);
       } catch (e) {
         result = null;
         error = e;
-        if (path) error.message += ", " + path;
+        if (path) {
+          error.message += ", " + path;
+        }
       }
-      if (callback) callback.call(this, error, result);
+      if (callback) {
+        callback.call(this, error, result);
+      }
       return result;
     },
     coffeekup: function(content, options, callback) {
       var result;
       result = require("coffeekup").render(content, options);
-      if (callback) callback.call(this, null, result);
+      if (callback) {
+        callback.call(this, null, result);
+      }
       return result;
     },
     less: function(content, options, callback) {
-      var engine, parser, path, result,
-        _this = this;
+      var engine, parser, path, result;
       result = "";
       path = options.path;
       options.filename = path;
@@ -158,10 +182,12 @@
       engine = require("less");
       parser = new engine.Parser(options);
       try {
-        parser.parse(content, function(error, tree) {
+        parser.parse(content, __bind(function(error, tree) {
           var message;
           if (error) {
-            if (path) error.message += ", " + path;
+            if (path) {
+              error.message += ", " + path;
+            }
           } else {
             try {
               result = tree.toCSS();
@@ -169,9 +195,13 @@
               error = e;
             }
           }
-          if (error) message = error.message + ", " + path;
-          if (callback) return callback.call(_this, message, result);
-        });
+          if (error) {
+            message = error.message + ", " + path;
+          }
+          if (callback) {
+            return callback.call(this, message, result);
+          }
+        }, this));
       } catch (error) {
         callback.call(this, error.message += ", " + path, "");
       }
@@ -182,15 +212,21 @@
       path = options.path;
       error = null;
       preprocessor = options.preprocessor || this.constructor.preprocessor;
-      if (preprocessor) content = preprocessor.call(this, content, options);
+      if (preprocessor) {
+        content = preprocessor.call(this, content, options);
+      }
       try {
         result = require("mustache").to_html(content, options.locals);
       } catch (e) {
         error = e;
         result = null;
-        if (path) error.message += ", " + path;
+        if (path) {
+          error.message += ", " + path;
+        }
       }
-      if (callback) callback.call(this, error, result);
+      if (callback) {
+        callback.call(this, error, result);
+      }
       return result;
     },
     handlebars: function(content, options, callback) {},
@@ -198,13 +234,17 @@
       var error, preprocessor, result;
       error = null;
       preprocessor = options.preprocessor || this.constructor.preprocessor;
-      if (preprocessor) content = preprocessor.call(this, content, options);
+      if (preprocessor) {
+        content = preprocessor.call(this, content, options);
+      }
       try {
         result = require("markdown").parse(content);
       } catch (e) {
         error = e;
       }
-      if (callback) callback.call(this, error, result);
+      if (callback) {
+        callback.call(this, error, result);
+      }
       return result;
     },
     yui: function(content, options, callback) {
@@ -215,9 +255,13 @@
         result = require("./vendor/cssmin").cssmin(content);
       } catch (e) {
         error = e;
-        if (path) error.message += ", " + path;
+        if (path) {
+          error.message += ", " + path;
+        }
       }
-      if (callback) callback.call(this, error, result);
+      if (callback) {
+        callback.call(this, error, result);
+      }
       return result;
     },
     uglifyjs: function(content, options, callback) {
@@ -233,14 +277,20 @@
         result = compressor.gen_code(ast);
       } catch (e) {
         error = e;
-        if (path) error.message += ", " + path;
+        if (path) {
+          error.message += ", " + path;
+        }
       }
-      if (callback) callback.call(this, error, result);
+      if (callback) {
+        callback.call(this, error, result);
+      }
       return result;
     },
     _async: function(array, iterator, callback) {
       var completed, iterate;
-      if (!array.length) return callback();
+      if (!array.length) {
+        return callback();
+      }
       completed = 0;
       iterate = function() {
         return iterator(array[completed], function(error) {
@@ -260,5 +310,4 @@
       return iterate();
     }
   };
-
 }).call(this);
