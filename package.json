@@ -1,6 +1,6 @@
 {
   "name": "mint",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Template abstraction framework",
   "homepage": "http://github.com/viatropos/mint.js",
   "main": "mint.js",
