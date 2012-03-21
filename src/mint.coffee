@@ -21,6 +21,8 @@ module.exports =
         "less"
       when "mu", "mustache"
         "mustache"
+      when "hbs", "handlebars"
+        "handlebars"
       when "md", "mkd", "markdown", "mdown"
         "markdown"
 
@@ -176,7 +178,14 @@ module.exports =
     result
 
   handlebars: (content, options, callback) ->
-
+    error = null
+    
+    try
+      result = require("handlebars").compile(content)(options.locals or {})
+    catch e
+      error = e
+    
+    callback.call(@, error, result) if callback
 
   markdown: (content, options, callback) ->
     error = null

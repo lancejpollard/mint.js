@@ -19,6 +19,7 @@ mint.coffeekup
 mint.eco
 mint.ejs
 mint.haml
+mint.handlebars
 mint.jade
 mint.less
 mint.stylus
