@@ -128,6 +128,15 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
     mint.mustache input, locals: locals, (error, result) ->
       assert.equal result, output
 
+  it "should render handlebars", ->
+	input = fs.readFileSync("./test/fixtures/views/handlebars.hbs", "utf-8")
+	output = fs.readFileSync("./test/fixtures/views/handlebars.html", "utf-8")
+	locals=
+		name: 'Vadim'
+	
+	mint.handlebars input, locals: locals, (error, result) ->
+		assert.equal result, output
+
   it "should render markdown", ->
     input     = fs.readFileSync("./test/fixtures/docs/markdown.markdown", "utf-8")
     output    = fs.readFileSync("./test/fixtures/docs/markdown.html", "utf-8")

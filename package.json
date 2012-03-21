@@ -1,6 +1,6 @@
 {
   "name": "mint",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Template abstraction framework",
   "homepage": "http://github.com/viatropos/mint.js",
   "main": "mint.js",
@@ -43,7 +43,9 @@
     "jade":               ">= 0.20.x",
     "haml":               ">= 0.4.x",
     "hamljs":             ">= 0.6.x",
-    "mustache":           ">= 0.4.x"
+    "mustache":           ">= 0.4.x",
+	"handlebars":		  "*",
+	"eco":				  "*"
 
   },
   "scripts": {
