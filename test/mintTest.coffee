@@ -76,6 +76,13 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
       assert.equal result, output
       done()
 
+  it "should render haml-coffee", (done) ->
+    input     = fs.readFileSync("./test/fixtures/views/haml-coffee.hamlc", "utf-8")
+    output    = fs.readFileSync("./test/fixtures/views/haml-coffee.html", "utf-8")
+    mint.hamlcoffee input, locals: projects: [{ name: "Mobile app", url: "/projects/1", description: "Iteration 1" }], (error, result) ->
+      assert.equal result, output
+      done()
+
   # it "should render doT", ->
   #   engine    = new mint.DoT
   #   input     = fs.readFileSync("./test/fixtures/views/doT.js", "utf-8")
@@ -133,7 +140,7 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
 	output = fs.readFileSync("./test/fixtures/views/handlebars.html", "utf-8")
 	locals=
 		name: 'Vadim'
-	
+
 	mint.handlebars input, locals: locals, (error, result) ->
 		assert.equal result, output
 

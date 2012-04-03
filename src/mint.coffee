@@ -13,6 +13,8 @@ module.exports =
         "eco"
       when "haml"
         "haml"
+      when "hamlc"
+        "hamlcoffee"
       when "ejs"
         "ejs"
       when "coffee", "coffeescript", "coffee-script"
@@ -86,6 +88,11 @@ module.exports =
 
   haml: (content, options, callback) ->
     result = require('hamljs').render(content, options || {})
+    callback.call(@, null, result) if callback
+    result
+
+  hamlcoffee: (content, options, callback) ->
+    result = require('haml-coffee').compile(content, options || {})(options.locals)
     callback.call(@, null, result) if callback
     result
 
