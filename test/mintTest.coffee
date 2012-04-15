@@ -19,6 +19,14 @@ $(document).ready(function() {
     assert.equal mint.engine(".styl"), "stylus"
     assert.equal mint.engine("styl"), "stylus"
     assert.equal mint.engine("eco"), "eco"
+    
+  it "should render minified with clean-css", (done) ->
+    input     = "body { background: red; }"
+    output    = "body{background:red}"
+
+    mint.cleanCSS input, {}, (error, result) ->
+      assert.equal result, output
+      done()
 
   it "should render minified css with yui", (done) ->
     input     = "body { background: red; }"

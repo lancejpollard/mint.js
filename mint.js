@@ -293,6 +293,23 @@
       }
       return result;
     },
+    cleanCSS: function(content, options, callback) {
+      var error, path, result;
+      path = options.path;
+      error = null;
+      try {
+        result = require("clean-css").process(content);
+      } catch (e) {
+        error = e;
+        if (path) {
+          error.message += ", " + path;
+        }
+      }
+      if (callback) {
+        callback.call(this, error, result);
+      }
+      return result;
+    },
     uglifyjs: function(content, options, callback) {
       var ast, compressor, error, parser, path, result;
       path = options.path;

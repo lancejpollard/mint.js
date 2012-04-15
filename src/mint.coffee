@@ -222,7 +222,21 @@ module.exports =
     callback.call(@, error, result) if callback
 
     result
+    
+  cleanCSS: (content, options, callback) ->
+    path          = options.path
+    error         = null
 
+    try
+      result = require("clean-css").process(content)
+    catch e
+      error = e
+      error.message += ", #{path}" if path
+
+    callback.call(@, error, result) if callback
+
+    result
+      
   uglifyjs: (content, options, callback) ->
     path          = options.path
     error         = null
