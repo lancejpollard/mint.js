@@ -43,6 +43,7 @@
     "jade":               ">= 0.20.x",
     "haml":               ">= 0.4.x",
     "hamljs":             ">= 0.6.x",
+    "haml-coffee":        ">= 0.5.0",
     "mustache":           ">= 0.4.x",
 	"handlebars":		  "*",
 	"eco":				  "*"

@@ -16,6 +16,8 @@
             return "eco";
           case "haml":
             return "haml";
+          case "hamlc":
+            return "hamlcoffee";
           case "ejs":
             return "ejs";
           case "coffee":
@@ -105,6 +107,12 @@
     haml: function(content, options, callback) {
       var result;
       result = require('hamljs').render(content, options || {});
+      if (callback) callback.call(this, null, result);
+      return result;
+    },
+    hamlcoffee: function(content, options, callback) {
+      var result;
+      result = require('haml-coffee').compile(content, options || {})(options.locals);
       if (callback) callback.call(this, null, result);
       return result;
     },

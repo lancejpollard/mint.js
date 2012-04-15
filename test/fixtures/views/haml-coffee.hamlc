@@ -1,0 +1,6 @@
+- if @projects.length isnt 0
+  - for project in @projects
+    %a{ href: project.url }= project.name
+    %p= project.description
+- else
+  No projects
