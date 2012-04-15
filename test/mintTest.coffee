@@ -25,7 +25,6 @@ $(document).ready(function() {
     output    = "body{background:red}"
 
     mint.yui input, {}, (error, result) ->
-      console.log error
       assert.equal result, output
       done()
 
