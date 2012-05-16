@@ -45,6 +45,13 @@ mint.jade input, {}, (error, result) ->
   assert.equal result, output
 ```
 
+or if you want just to compile a template(**Note**: supports only jade, haml, handlebars, eco, ejs):
+
+``` coffeescript
+fn = mint.compile template: input, engine: 'jade' # Function
+fn title: 'Title', author: 'Some author' # String, rendered template
+```
+
 ## API
 
 ``` coffeescript

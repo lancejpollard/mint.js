@@ -55,6 +55,13 @@ module.exports =
     @_async engines, iterate, (error) =>
       callback.call(@, error, string)
 
+  compile: (options, callback) -> # options = { engine: 'jade', template: '<%= %>' }, supported: jade, haml, ejs, eco, handlebars
+    engine = require if options.engine is 'haml' then 'hamljs' else options.engine # TODO: make this prettier
+    template = options.template or options.content
+    
+    result = engine.compile template
+    result
+
   stylus: (content, options, callback) ->
     result        = ""
     path          = options.path

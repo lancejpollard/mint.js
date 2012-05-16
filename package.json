@@ -44,8 +44,8 @@
     "haml":               ">= 0.4.x",
     "hamljs":             ">= 0.6.x",
     "mustache":           ">= 0.4.x",
-	"handlebars":		  "*",
-	"eco":				  "*"
+		"handlebars":		  		"*",
+		"eco":				  			"*"
 
   },
   "scripts": {
