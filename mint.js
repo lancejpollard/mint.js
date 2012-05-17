@@ -76,6 +76,13 @@
         return callback.call(_this, error, string);
       });
     },
+    compile: function(options, callback) {
+      var engine, result, template;
+      engine = require(options.engine === 'haml' ? 'hamljs' : options.engine);
+      template = options.template || options.content;
+      result = engine.compile(template);
+      return result;
+    },
     stylus: function(content, options, callback) {
       var engine, path, preprocessor, result,
         _this = this;

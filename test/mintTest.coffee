@@ -11,7 +11,7 @@ $(document).ready(function() {
 });
 
 '''
-    mint.render path: "test/fixtures/javascripts/some.extensions.js.coffee.ejs", locals: {word: "Hello World"}, (error, result) ->
+    mint.render path: "test/fixtures/javascripts/some.extensions.js.coffee.ejs", locals: word: "Hello World", (error, result) ->
       assert.equal result, output
       done()
 
@@ -76,12 +76,22 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
       assert.equal result, output
       done()
 
+  it 'should compile jade', ->
+    input = fs.readFileSync './test/fixtures/views/jade.jade', 'utf-8'
+    output = fs.readFileSync './test/fixtures/views/jade.html', 'utf-8'
+    assert.equal mint.compile(template: input, engine: 'jade')(), output
+
   it "should render haml", (done) ->
     input     = fs.readFileSync("./test/fixtures/views/haml.haml", "utf-8")
     output    = fs.readFileSync("./test/fixtures/views/haml.html", "utf-8")
     mint.haml input, {}, (error, result) ->
       assert.equal result, output
       done()
+
+  it 'should compile haml', ->
+    input = fs.readFileSync './test/fixtures/views/haml.haml', 'utf-8'
+    output = fs.readFileSync './test/fixtures/views/haml.html', 'utf-8'
+    assert.equal mint.compile(template: input, engine: 'haml')(), output
 
   it "should render haml-coffee", (done) ->
     input     = fs.readFileSync("./test/fixtures/views/haml-coffee.hamlc", "utf-8")
@@ -103,6 +113,11 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
     mint.ejs input, {locals: {name: "My Name"}}, (error, result) ->
       assert.equal result, output
 
+  it 'should compile ejs', ->
+    input = fs.readFileSync './test/fixtures/views/ejs.ejs', 'utf-8'
+    output = fs.readFileSync './test/fixtures/views/ejs.html', 'utf-8'
+    assert.equal mint.compile(template: input, engine: 'ejs')(name: 'My Name'), output
+
   it "should render coffee script", ->
     input     = fs.readFileSync("./test/fixtures/javascripts/coffee.coffee", "utf-8")
     output    = fs.readFileSync("./test/fixtures/javascripts/coffee.js", "utf-8")
@@ -121,6 +136,17 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
     mint.eco input, locals: projects: [{ name: "Mobile app", url: "/projects/1", description: "Iteration 1" }], (error, result) ->
       assert.equal result, output
       done()
+
+  it 'should compile eco', ->
+    input = fs.readFileSync './test/fixtures/views/eco.coffee', 'utf-8'
+    output = fs.readFileSync './test/fixtures/views/eco.html', 'utf-8'
+    locals=
+      projects: [{
+        name: 'Mobile app',
+        url: '/projects/1',
+        description: 'Iteration 1'
+      }]
+    assert.equal mint.compile(template: input, engine: 'eco')(locals), output
 
   it "should render coffeekup", (done) ->
     input     = fs.readFileSync("test/fixtures/views/kup.coffee", "utf-8")
@@ -143,13 +169,18 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
       assert.equal result, output
 
   it "should render handlebars", ->
-	input = fs.readFileSync("./test/fixtures/views/handlebars.hbs", "utf-8")
-	output = fs.readFileSync("./test/fixtures/views/handlebars.html", "utf-8")
-	locals=
-		name: 'Vadim'
-
-	mint.handlebars input, locals: locals, (error, result) ->
-		assert.equal result, output
+    input = fs.readFileSync("./test/fixtures/views/handlebars.hbs", "utf-8")
+    output = fs.readFileSync("./test/fixtures/views/handlebars.html", "utf-8")
+    locals = name: 'Vadim'
+    
+    mint.handlebars input, locals: locals, (error, result) ->
+      assert.equal result, output
+  
+  it 'should compile handlebars', ->
+    input = fs.readFileSync './test/fixtures/views/handlebars.hbs', 'utf-8'
+    output = fs.readFileSync './test/fixtures/views/handlebars.html', 'utf-8'
+	  
+    assert.equal mint.compile(template: input, engine: 'handlebars')(name: 'Vadim'), output
 
   it "should render markdown", ->
     input     = fs.readFileSync("./test/fixtures/docs/markdown.markdown", "utf-8")
