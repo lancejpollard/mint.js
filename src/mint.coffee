@@ -27,6 +27,8 @@ module.exports =
         "handlebars"
       when "md", "mkd", "markdown", "mdown"
         "markdown"
+      when "dust"
+        "dust"
 
   # Pass in path, it computes the extensions and what engine you'll want
   enginesFor: (path) ->
@@ -57,11 +59,19 @@ module.exports =
     @_async engines, iterate, (error) =>
       callback.call(@, error, string)
 
-  compile: (options, callback) -> # options = { engine: 'jade', template: '<%= %>' }, supported: jade, haml, ejs, eco, handlebars
-    engine = require if options.engine is 'haml' then 'hamljs' else options.engine # TODO: make this prettier
+  compile: (options, callback) -> # options = { engine: 'jade', template: '<%= %>' }, supported: jade, haml, ejs, eco, handlebars and dust
+    # engine = require if options.engine is 'haml' then 'hamljs' else options.engine # TODO: make this prettier
+    [engine, compiler] = switch options.engine
+      when 'jade', 'ejs', 'eco', 'handlebars'
+        [require(options.engine), 'compile']
+      when 'haml'
+        [require('hamljs'), 'compile']
+      when 'dust'
+        [require('dustjs-linkedin'), 'compileFn']
     template = options.template or options.content
-    
-    result = engine.compile template
+
+
+    result = engine[compiler] template
     result
 
   stylus: (content, options, callback) ->
@@ -200,6 +210,14 @@ module.exports =
       error = e
     
     callback.call(@, error, result) if callback
+  
+  dust: (content, options, callback) ->
+    result = ""
+    require('dustjs-linkedin').renderSource content, options.locals, (error, data) =>
+      result = data
+      callback.call(@, error, result) if callback
+    
+    result
 
   markdown: (content, options, callback) ->
     error = null

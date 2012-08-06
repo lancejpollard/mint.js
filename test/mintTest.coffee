@@ -81,6 +81,20 @@ expected "indent", got "outdent", test/fixtures/stylesheets/stylus-error.styl
     output = fs.readFileSync './test/fixtures/views/jade.html', 'utf-8'
     assert.equal mint.compile(template: input, engine: 'jade')(), output
 
+  it 'should render dust', (done) ->
+    input  = fs.readFileSync './test/fixtures/views/dust.dust', 'utf-8'
+    output = fs.readFileSync './test/fixtures/views/dust.html', 'utf-8'
+    mint.dust input, {locals: {name: 'World'}}, (error, result) ->
+      assert.equal result, output
+      done()
+
+  it 'should compile dust', (done) ->
+    input = fs.readFileSync './test/fixtures/views/dust.dust', 'utf-8'
+    output = fs.readFileSync './test/fixtures/views/dust.html', 'utf-8'
+    mint.compile(template: input, engine: 'dust') {name: 'World'}, (error, result) -> 
+      assert.equal result, output
+      done()
+
   it "should render haml", (done) ->
     input     = fs.readFileSync("./test/fixtures/views/haml.haml", "utf-8")
     output    = fs.readFileSync("./test/fixtures/views/haml.html", "utf-8")
