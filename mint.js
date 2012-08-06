@@ -79,22 +79,22 @@
       });
     },
     compile: function(options, callback) {
-      var compiler, engine, result, template;
-      engine = require(options.engine === 'haml' ? 'hamljs' : options.engine);
-      template = options.template || options.content;
-      compiler = (function() {
+      var compiler, engine, result, template, _ref;
+      _ref = (function() {
         switch (options.engine) {
           case 'jade':
-          case 'haml':
           case 'ejs':
           case 'eco':
           case 'handlebars':
-            return engine.compile;
+            return [require(options.engine), 'compile'];
+          case 'haml':
+            return [require('hamljs'), 'compile'];
           case 'dust':
-            return engine.compileFn;
+            return [require('dustjs-linkedin'), 'compileFn'];
         }
-      })();
-      result = compiler(template);
+      })(), engine = _ref[0], compiler = _ref[1];
+      template = options.template || options.content;
+      result = engine[compiler](template);
       return result;
     },
     stylus: function(content, options, callback) {
@@ -284,7 +284,7 @@
       var result,
         _this = this;
       result = "";
-      require('dust').renderSource(content, options.locals, function(error, data) {
+      require('dustjs-linkedin').renderSource(content, options.locals, function(error, data) {
         result = data;
         if (callback) {
           return callback.call(_this, error, result);

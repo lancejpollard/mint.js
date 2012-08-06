@@ -60,17 +60,18 @@ module.exports =
       callback.call(@, error, string)
 
   compile: (options, callback) -> # options = { engine: 'jade', template: '<%= %>' }, supported: jade, haml, ejs, eco, handlebars and dust
-    engine = require if options.engine is 'haml' then 'hamljs' else options.engine # TODO: make this prettier
-    template = options.template or options.content
-    
-    compiler = switch options.engine
-      when 'jade', 'haml', 'ejs', 'eco', 'handlebars'
-        engine.compile
+    # engine = require if options.engine is 'haml' then 'hamljs' else options.engine # TODO: make this prettier
+    [engine, compiler] = switch options.engine
+      when 'jade', 'ejs', 'eco', 'handlebars'
+        [require(options.engine), 'compile']
+      when 'haml'
+        [require('hamljs'), 'compile']
       when 'dust'
-        engine.compileFn
+        [require('dustjs-linkedin'), 'compileFn']
+    template = options.template or options.content
 
 
-    result = compiler template
+    result = engine[compiler] template
     result
 
   stylus: (content, options, callback) ->
@@ -212,7 +213,7 @@ module.exports =
   
   dust: (content, options, callback) ->
     result = ""
-    require('dust').renderSource content, options.locals, (error, data) =>
+    require('dustjs-linkedin').renderSource content, options.locals, (error, data) =>
       result = data
       callback.call(@, error, result) if callback
     
