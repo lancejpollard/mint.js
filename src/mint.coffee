@@ -63,7 +63,14 @@ module.exports =
     engine = require if options.engine is 'haml' then 'hamljs' else options.engine # TODO: make this prettier
     template = options.template or options.content
     
-    result = engine.compile template
+    compiler = switch options.engine
+      when 'jade', 'haml', 'ejs', 'eco', 'handlebars'
+        engine.compile
+      when 'dust'
+        engine.compileFn
+
+
+    result = compiler template
     result
 
   stylus: (content, options, callback) ->
@@ -205,7 +212,7 @@ module.exports =
   
   dust: (content, options, callback) ->
     result = ""
-    require('dust').render content, options.local, (error, data) =>
+    require('dust').renderSource content, options.locals, (error, data) =>
       result = data
       callback.call(@, error, result) if callback
     
